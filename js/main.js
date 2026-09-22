@@ -289,23 +289,33 @@ var recipes = [
   }
 ];
 
-var recipeImage = document.querySelector('.recipe-image');
-var ratingAverage = document.querySelector('.recipe-image-side .rounded-pill .fw-semibold');
-var ratingQuantity = document.querySelector('.recipe-image-side .rounded-pill .text-muted');
+// ----------------------------------------------------
+// الاستدعاءات المنظمة والمعنوية (جميعها عبر getElementById)
+// ----------------------------------------------------
 
-var prepTimeDisplay = document.querySelector('.recipe-image-side .row.text-center .col-4:nth-child(1) .fw-bold');
-var cookTimeDisplay = document.querySelector('.recipe-image-side .row.text-center .col-4:nth-child(2) .fw-bold');
-var servingsDisplay = document.querySelector('.recipe-image-side .row.text-center .col-4:nth-child(3) .fw-bold');
+// 1. الصورة والتقييم
+var recipeImage = document.getElementById('recipe-image');
+var ratingAverage = document.getElementById('recipe-rating');
+var ratingQuantity = document.getElementById('recipe-reviews');
 
+// 2. أوقات التحضير والطهي والحصص
+var prepTimeDisplay = document.getElementById('prep-time');
+var cookTimeDisplay = document.getElementById('cook-time');
+var servingsDisplay = document.getElementById('recipe-servings');
+
+// 3. الشارات والعناوين
 var difficultyBadge = document.getElementById('difficulty-badge');
 var categoryBadge = document.getElementById('category-badge');
 var recipeName = document.getElementById('recipe-name');
 var recipeDescription = document.getElementById('recipe-description');
 var timeWarningContainer = document.getElementById('time-warning-container');
 
+// 4. القوائم
 var ingredientsList = document.getElementById('ingredients-list');
 var instructionsList = document.getElementById('instructions-list');
+var tipsList = document.getElementById('tips-list');
 
+// 5. القيم الغذائية
 var caloriesValue = document.getElementById('calories-value');
 var proteinValue = document.getElementById('protein-value');
 var carbsValue = document.getElementById('carbs-value');
@@ -313,7 +323,7 @@ var fatValue = document.getElementById('fat-value');
 var fiberValue = document.getElementById('fiber-value');
 var sodiumValue = document.getElementById('sodium-value');
 
-var tipsList = document.getElementById('tips-list');
+// 6. زر التحويل
 var tryAnotherBtn = document.getElementById('try-another-btn');
 
 var currentRecipeIndex = 0;
@@ -327,21 +337,26 @@ function applyBadgeStyle(badgeElement, text, colorsDictionary, fallbackColor) {
 function updateRecipeDisplay(index) {
   var currentRecipe = recipes[index];
 
+  // تحديث الصورة والتقييم
   recipeImage.src = currentRecipe.image;
   recipeImage.alt = currentRecipe.name;
   ratingAverage.textContent = currentRecipe.rating;
   ratingQuantity.textContent = currentRecipe.reviews;
 
+  // تحديث الأوقات والحصص
   prepTimeDisplay.textContent = currentRecipe.prepTime;
   cookTimeDisplay.textContent = currentRecipe.cookTime;
   servingsDisplay.textContent = currentRecipe.servings;
 
+  // تحديث الشارات
   applyBadgeStyle(difficultyBadge, currentRecipe.difficulty, difficultyColors, "bg-success-subtle text-success");
   applyBadgeStyle(categoryBadge, currentRecipe.category, categoryColors, "bg-primary-subtle text-primary");
 
+  // تحديث الاسم والوصف
   recipeName.textContent = currentRecipe.name;
   recipeDescription.textContent = currentRecipe.description;
 
+  // تنبيه الوقت الممتد
   if (currentRecipe.extendedTime) {
     timeWarningContainer.innerHTML = `
       <div id="time-warning" class="alert-custom border-0 border-start border-4 rounded-3 p-3 mb-4">
@@ -362,6 +377,7 @@ function updateRecipeDisplay(index) {
     timeWarningContainer.innerHTML = "";
   }
 
+  // ملء المقادير
   ingredientsList.innerHTML = currentRecipe.ingredients.map(function(item, idx) {
     return `
       <li class="d-flex align-items-center gap-3">
@@ -371,6 +387,7 @@ function updateRecipeDisplay(index) {
     `;
   }).join('');
 
+  // ملء خطوات التحضير
   instructionsList.innerHTML = currentRecipe.instructions.map(function(step, idx) {
     return `
       <div class="d-flex align-items-start gap-3">
@@ -384,6 +401,7 @@ function updateRecipeDisplay(index) {
     `;
   }).join('');
 
+  // ملء القيم الغذائية
   caloriesValue.textContent = currentRecipe.nutrition.calories;
   proteinValue.textContent = currentRecipe.nutrition.protein;
   carbsValue.textContent = currentRecipe.nutrition.carbs;
@@ -391,6 +409,7 @@ function updateRecipeDisplay(index) {
   fiberValue.textContent = currentRecipe.nutrition.fiber;
   sodiumValue.textContent = currentRecipe.nutrition.sodium;
 
+  // ملء النصائح
   tipsList.innerHTML = currentRecipe.tips.map(function(tip) {
     return `
       <div class="tip-card p-3 p-md-4 bg-warning-subtle border-0 border-start border-4 border-warning rounded-4 d-flex align-items-start gap-3">
@@ -401,9 +420,10 @@ function updateRecipeDisplay(index) {
   }).join('');
 }
 
-// استدعاء التهيئة لتشغيل أول وصفة فور التحميل
+// تشغيل أول وصفة فور التحميل
 updateRecipeDisplay(currentRecipeIndex);
 
+// تفعيل زر التبديل
 tryAnotherBtn.addEventListener('click', function() {
   currentRecipeIndex = (currentRecipeIndex + 1) % recipes.length;
   updateRecipeDisplay(currentRecipeIndex);
