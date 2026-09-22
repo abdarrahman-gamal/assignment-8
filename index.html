@@ -67,9 +67,11 @@
         <div class="content p-4">
             <div class="row g-0 h-100 bg-white rounded-4 shadow overflow-hidden">
 
+                <!-- العمود الأيسر: الصورة ومعلومات التقييم والوقت -->
                 <div class="col-12 col-lg-5 position-relative recipe-image-side">
 
-                    <img src="img/1.png" alt="Teriyaki Chicken Bowl" class="w-100 h-100 object-fit-cover recipe-image">
+                    <!-- تم إضافة id="recipe-image" -->
+                    <img id="recipe-image" src="img/1.png" alt="Teriyaki Chicken Bowl" class="w-100 h-100 object-fit-cover recipe-image">
 
                     <div class="position-absolute top-0 start-0 m-4">
 
@@ -79,11 +81,13 @@
 
                                 <i class="fa-solid fa-star star-yellow"></i>
 
-                                <span class="fw-semibold">
+                                <!-- تم إضافة id="recipe-rating" -->
+                                <span id="recipe-rating" class="fw-semibold">
                                     4.8
                                 </span>
 
-                                <span class="small text-muted">
+                                <!-- تم إضافة id="recipe-reviews" -->
+                                <span id="recipe-reviews" class="small text-muted">
                                     (445 reviews)
                                 </span>
 
@@ -107,7 +111,8 @@
                                         Prep Time
                                     </p>
 
-                                    <p class="fw-bold text-dark mb-0">
+                                    <!-- تم إضافة id="prep-time" -->
+                                    <p id="prep-time" class="fw-bold text-dark mb-0">
                                         20 min
                                     </p>
 
@@ -121,7 +126,8 @@
                                         Cook Time
                                     </p>
 
-                                    <p class="fw-bold text-dark mb-0">
+                                    <!-- تم إضافة id="cook-time" -->
+                                    <p id="cook-time" class="fw-bold text-dark mb-0">
                                         15 min
                                     </p>
 
@@ -135,7 +141,8 @@
                                         Servings
                                     </p>
 
-                                    <p class="fw-bold text-dark mb-0">
+                                    <!-- تم إضافة id="recipe-servings" -->
+                                    <p id="recipe-servings" class="fw-bold text-dark mb-0">
                                         2 people
                                     </p>
 
@@ -150,6 +157,7 @@
                 </div>
 
 
+                <!-- العمود الأيمن: تفاصيل الوصفة والألسنة -->
                 <div class="col-12 col-lg-7 h-800">
 
                     <div class="p-4 p-lg-5 h-100 overflow-auto">
