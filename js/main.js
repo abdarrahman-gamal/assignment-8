@@ -1,17 +1,3 @@
-var difficultyColors = {
-  Easy: "bg-success-subtle text-success",
-  Intermediate: "bg-warning-subtle text-warning-emphasis",
-  Hard: "bg-danger-subtle text-danger"
-};
-
-var categoryColors = {
-  Asian: "bg-primary-subtle text-primary",
-  Mediterranean: "bg-info-subtle text-info-emphasis",
-  Egyptian: "bg-danger-subtle text-danger",
-  Chinese: "bg-danger-subtle text-danger",
-  American: "bg-secondary-subtle text-secondary"
-};
-
 var recipes = [
   {
     name: "Classic Pad Thai",
@@ -289,33 +275,24 @@ var recipes = [
   }
 ];
 
-// ----------------------------------------------------
-// الاستدعاءات المنظمة والمعنوية (جميعها عبر getElementById)
-// ----------------------------------------------------
-
-// 1. الصورة والتقييم
 var recipeImage = document.getElementById('recipe-image');
 var ratingAverage = document.getElementById('recipe-rating');
 var ratingQuantity = document.getElementById('recipe-reviews');
 
-// 2. أوقات التحضير والطهي والحصص
 var prepTimeDisplay = document.getElementById('prep-time');
 var cookTimeDisplay = document.getElementById('cook-time');
 var servingsDisplay = document.getElementById('recipe-servings');
 
-// 3. الشارات والعناوين
 var difficultyBadge = document.getElementById('difficulty-badge');
 var categoryBadge = document.getElementById('category-badge');
 var recipeName = document.getElementById('recipe-name');
 var recipeDescription = document.getElementById('recipe-description');
 var timeWarningContainer = document.getElementById('time-warning-container');
 
-// 4. القوائم
 var ingredientsList = document.getElementById('ingredients-list');
 var instructionsList = document.getElementById('instructions-list');
 var tipsList = document.getElementById('tips-list');
 
-// 5. القيم الغذائية
 var caloriesValue = document.getElementById('calories-value');
 var proteinValue = document.getElementById('protein-value');
 var carbsValue = document.getElementById('carbs-value');
@@ -323,41 +300,46 @@ var fatValue = document.getElementById('fat-value');
 var fiberValue = document.getElementById('fiber-value');
 var sodiumValue = document.getElementById('sodium-value');
 
-// 6. زر التحويل
 var tryAnotherBtn = document.getElementById('try-another-btn');
 
 var currentRecipeIndex = 0;
 
-function applyBadgeStyle(badgeElement, text, colorsDictionary, fallbackColor) {
-  badgeElement.textContent = text;
-  var colorClass = colorsDictionary[text] || fallbackColor;
-  badgeElement.className = "px-3 py-1 rounded-pill small fw-semibold " + colorClass;
-}
+function displayRecipe() {
+  var currentRecipe = recipes[currentRecipeIndex];
 
-function updateRecipeDisplay(index) {
-  var currentRecipe = recipes[index];
-
-  // تحديث الصورة والتقييم
   recipeImage.src = currentRecipe.image;
   recipeImage.alt = currentRecipe.name;
-  ratingAverage.textContent = currentRecipe.rating;
-  ratingQuantity.textContent = currentRecipe.reviews;
+  ratingAverage.innerHTML = currentRecipe.rating;
+  ratingQuantity.innerHTML = currentRecipe.reviews;
 
-  // تحديث الأوقات والحصص
-  prepTimeDisplay.textContent = currentRecipe.prepTime;
-  cookTimeDisplay.textContent = currentRecipe.cookTime;
-  servingsDisplay.textContent = currentRecipe.servings;
+  prepTimeDisplay.innerHTML = currentRecipe.prepTime;
+  cookTimeDisplay.innerHTML = currentRecipe.cookTime;
+  servingsDisplay.innerHTML = currentRecipe.servings;
 
-  // تحديث الشارات
-  applyBadgeStyle(difficultyBadge, currentRecipe.difficulty, difficultyColors, "bg-success-subtle text-success");
-  applyBadgeStyle(categoryBadge, currentRecipe.category, categoryColors, "bg-primary-subtle text-primary");
+  recipeName.innerHTML = currentRecipe.name;
+  recipeDescription.innerHTML = currentRecipe.description;
 
-  // تحديث الاسم والوصف
-  recipeName.textContent = currentRecipe.name;
-  recipeDescription.textContent = currentRecipe.description;
+  if (currentRecipe.difficulty === "Easy") {
+    difficultyBadge.className = "px-3 py-1 rounded-pill small fw-semibold bg-success-subtle text-success";
+  } else if (currentRecipe.difficulty === "Intermediate") {
+    difficultyBadge.className = "px-3 py-1 rounded-pill small fw-semibold bg-warning-subtle text-warning-emphasis";
+  } else {
+    difficultyBadge.className = "px-3 py-1 rounded-pill small fw-semibold bg-danger-subtle text-danger";
+  }
+  difficultyBadge.innerHTML = currentRecipe.difficulty;
 
-  // تنبيه الوقت الممتد
-  if (currentRecipe.extendedTime) {
+  if (currentRecipe.category === "Asian") {
+    categoryBadge.className = "px-3 py-1 rounded-pill small fw-semibold bg-primary-subtle text-primary";
+  } else if (currentRecipe.category === "Mediterranean") {
+    categoryBadge.className = "px-3 py-1 rounded-pill small fw-semibold bg-info-subtle text-info-emphasis";
+  } else if (currentRecipe.category === "Egyptian" || currentRecipe.category === "Chinese") {
+    categoryBadge.className = "px-3 py-1 rounded-pill small fw-semibold bg-danger-subtle text-danger";
+  } else {
+    categoryBadge.className = "px-3 py-1 rounded-pill small fw-semibold bg-secondary-subtle text-secondary";
+  }
+  categoryBadge.innerHTML = currentRecipe.category;
+
+  if (currentRecipe.extendedTime === true) {
     timeWarningContainer.innerHTML = `
       <div id="time-warning" class="alert-custom border-0 border-start border-4 rounded-3 p-3 mb-4">
         <div class="d-flex align-items-center gap-3">
@@ -377,54 +359,60 @@ function updateRecipeDisplay(index) {
     timeWarningContainer.innerHTML = "";
   }
 
-  // ملء المقادير
-  ingredientsList.innerHTML = currentRecipe.ingredients.map(function(item, idx) {
-    return `
+  var ingredientsBox = "";
+  for (var i = 0; i < currentRecipe.ingredients.length; i++) {
+    ingredientsBox += `
       <li class="d-flex align-items-center gap-3">
-        <span class="ingredient-number rounded-circle text-white d-flex align-items-center justify-content-center fw-bold flex-shrink-0">${idx + 1}</span>
-        <span class="text-secondary">${item}</span>
+        <span class="ingredient-number rounded-circle text-white d-flex align-items-center justify-content-center fw-bold flex-shrink-0">${i + 1}</span>
+        <span class="text-secondary">${currentRecipe.ingredients[i]}</span>
       </li>
     `;
-  }).join('');
+  }
+  ingredientsList.innerHTML = ingredientsBox;
 
-  // ملء خطوات التحضير
-  instructionsList.innerHTML = currentRecipe.instructions.map(function(step, idx) {
-    return `
+  var instructionsBox = "";
+  for (var j = 0; j < currentRecipe.instructions.length; j++) {
+    instructionsBox += `
       <div class="d-flex align-items-start gap-3">
         <div class="step-number w-12 h-12 rounded-4 text-white fs-5 fw-bold d-flex align-items-center justify-content-center flex-shrink-0">
-          ${idx + 1}
+          ${j + 1}
         </div>
         <p class="text-secondary pt-2 mb-0 flex-grow-1">
-          ${step}
+          ${currentRecipe.instructions[j]}
         </p>
       </div>
     `;
-  }).join('');
+  }
+  instructionsList.innerHTML = instructionsBox;
 
-  // ملء القيم الغذائية
-  caloriesValue.textContent = currentRecipe.nutrition.calories;
-  proteinValue.textContent = currentRecipe.nutrition.protein;
-  carbsValue.textContent = currentRecipe.nutrition.carbs;
-  fatValue.textContent = currentRecipe.nutrition.fat;
-  fiberValue.textContent = currentRecipe.nutrition.fiber;
-  sodiumValue.textContent = currentRecipe.nutrition.sodium;
+  caloriesValue.innerHTML = currentRecipe.nutrition.calories;
+  proteinValue.innerHTML = currentRecipe.nutrition.protein;
+  carbsValue.innerHTML = currentRecipe.nutrition.carbs;
+  fatValue.innerHTML = currentRecipe.nutrition.fat;
+  fiberValue.innerHTML = currentRecipe.nutrition.fiber;
+  sodiumValue.innerHTML = currentRecipe.nutrition.sodium;
 
-  // ملء النصائح
-  tipsList.innerHTML = currentRecipe.tips.map(function(tip) {
-    return `
+  var tipsBox = "";
+  for (var k = 0; k < currentRecipe.tips.length; k++) {
+    tipsBox += `
       <div class="tip-card p-3 p-md-4 bg-warning-subtle border-0 border-start border-4 border-warning rounded-4 d-flex align-items-start gap-3">
         <i class="fa-solid fa-circle-check text-warning fs-5 mt-1 flex-shrink-0"></i>
-        <p class="text-secondary mb-0">${tip}</p>
+        <p class="text-secondary mb-0">${currentRecipe.tips[k]}</p>
       </div>
     `;
-  }).join('');
+  }
+  tipsList.innerHTML = tipsBox;
 }
 
-// تشغيل أول وصفة فور التحميل
-updateRecipeDisplay(currentRecipeIndex);
+displayRecipe();
 
-// تفعيل زر التبديل
-tryAnotherBtn.addEventListener('click', function() {
-  currentRecipeIndex = (currentRecipeIndex + 1) % recipes.length;
-  updateRecipeDisplay(currentRecipeIndex);
-});
+tryAnotherBtn.onclick = function() {
+  currentRecipeIndex++; // انتقل للوصفة التالية
+
+  if (currentRecipeIndex === recipes.length) {
+    currentRecipeIndex = 0;
+  }
+
+  // اعرض الوصفة الجديدة
+  displayRecipe();
+};
