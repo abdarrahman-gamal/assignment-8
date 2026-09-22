@@ -1,0 +1,171 @@
+:root {
+    /* نظام المسافات والتدرجات الأساسية */
+    --spacing: 4px;
+    --logo-grad: linear-gradient(to right bottom, oklch(0.705 0.213 47.604) 0%, oklch(0.637 0.237 25.331) 100%);
+    
+    /* لوحة درجات البرتقالي */
+    --orange-2: #FFB86A;
+    --orange-3: #FFEDD4;
+    --orange-4: #FFF9EC;
+    --orange-dark: #F54900;
+    --bs-body-bg: var(--orange-4);
+
+    /* درجات الوردي */
+    --pink-subtle: #fce7f3;
+    --pink-dark: #db2777;
+
+    /* إعدادات بطاقات ومكونات الوصفة */
+    --recipe-scroll-height: 350px;
+    --ingredient-badge-size: calc(6 * var(--spacing));
+    --ingredient-bg-gradient: linear-gradient(135deg, var(--orange-4) 0%, var(--orange-3) 100%);
+    --tab-font-size: clamp(0.6rem, 2.2vw, 1rem);
+    --btn-hover-scale: 1.05;
+
+    /* تلميحات الشيف */
+    --tip-bg: var(--orange-4);
+    --tip-border: var(--orange-2);
+
+    /* تنبيهات الوقت */
+    --alert-red-bg: #fef2f2;
+    --alert-red-border: #ef4444;
+    --alert-red-title: #991b1b;
+    --alert-red-desc: #dc2626;
+
+
+      --recipe-img-mobile-height: 400px;
+}
+
+/* الهوية البصرية */
+.logo-grad {
+    background-image: var(--logo-grad);
+}
+
+/* فئات الأبعاد المعتمدة على وحدة المسافات */
+.w-2  { width: calc(2 * var(--spacing)); }
+.h-2  { height: calc(2 * var(--spacing)); }
+
+.w-10 { width: calc(10 * var(--spacing)); }
+.h-10 { height: calc(10 * var(--spacing)); }
+
+.w-12 { width: calc(12 * var(--spacing)); }
+.h-12 { height: calc(12 * var(--spacing)); }
+
+.w-14 { width: calc(14 * var(--spacing)); }
+.h-14 { height: calc(14 * var(--spacing)); }
+
+.w-16 { width: calc(16 * var(--spacing)); }
+.h-16 { height: calc(16 * var(--spacing)); }
+
+.h-800 {
+    height: 800px;
+}
+
+/* شريط التنقل العلوي */
+.navbar {
+    --bs-border-color: var(--orange-3);
+}
+
+.navbar-collapse {
+    --bs-border-color: var(--orange-2);
+}
+
+.navbar-nav {
+    --bs-nav-link-hover-color: var(--orange-dark);
+}
+
+/* تبويبات المحتوى والتنقل الداخلي */
+.content .nav-link {
+    --bs-nav-link-color: var(--bs-secondary-color, #6c757d);
+}
+
+.content .nav-underline .nav-link.active,
+.content .nav-underline .nav-link:focus,
+.content .nav-underline .nav-link:hover {
+    --bs-nav-underline-link-active-color: var(--orange-dark);
+    color: var(--bs-nav-underline-link-active-color);
+    border-bottom-color: var(--orange-dark);
+}
+
+.recipe-nav-tabs .nav-link {
+    font-size: var(--tab-font-size);
+}
+
+/* فئات الألوان المساعدة للنصوص والخلفيات */
+.bg-orange-subtle {
+    background-color: var(--orange-3);
+}
+
+.text-orange {
+    color: var(--orange-dark);
+}
+
+.bg-pink-subtle {
+    background-color: var(--pink-subtle);
+}
+
+.text-pink {
+    color: var(--pink-dark);
+}
+
+/* تفاصيل الوصفة والمكونات والخطوات */
+.recipe-scroll {
+    height: var(--recipe-scroll-height);
+}
+
+.bg-ingredients {
+    background: var(--ingredient-bg-gradient);
+}
+
+.step-number {
+    background-color: var(--orange-dark);
+}
+
+.ingredient-number {
+    width: var(--ingredient-badge-size);
+    height: var(--ingredient-badge-size);
+    background-color: var(--orange-dark);
+    font-size: 12px;
+}
+
+/* أزرار التفاعل والبطاقات */
+.recipe-btn {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.recipe-btn:hover {
+    transform: scale(var(--btn-hover-scale));
+}
+
+.tip-card {
+    background-color: var(--tip-bg);
+    border-left-color: var(--tip-border) !important;
+}
+
+/* صندوق تنبيه الوقت الإضافي */
+#time-warning.alert-custom {
+    background-color: var(--alert-red-bg);
+    border-left-color: var(--alert-red-border) !important;
+}
+
+.text-alert-icon {
+    color: var(--alert-red-border);
+}
+
+.text-alert-title {
+    color: var(--alert-red-title);
+}
+
+.text-alert-desc {
+    color: var(--alert-red-desc);
+}
+
+
+.recipe-image-side {
+  height: var(--recipe-img-mobile-height);
+}
+
+@media (min-width: 992px) {
+  .recipe-image-side {
+    height: auto;
+  }
+}
